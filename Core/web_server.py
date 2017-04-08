@@ -1,13 +1,8 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 from flask import Flask, request, send_from_directory
-from Core.config import get_conf
+from core.config import get_conf
 import json
 import time
 import hashlib
-
-ALLOWED_EXTENSIONS = ('c', 'py', 'rb', 'cpp', 'sh')
 
 def set_hash():
     hash = hashlib.md5()
@@ -20,6 +15,8 @@ def allowed_file(filename):
 
 
 app = Flask(__name__)
+ALLOWED_EXTENSIONS = ('c', 'py', 'rb', 'cpp', 'sh')
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
 
@@ -35,7 +32,7 @@ def upload_file():
         elif file and allowed_file(file.filename):
             hash_value = set_hash()
             file.save(config['web']['UPLOAD_FOLDER'] + "/" + hash_value)
-            return json.dumps({"Status": "Upload", "URL": url_base + hash_value})
+            return json.dumps({"Message": "Upload", "Status": "Not check", "URL": url_base + hash_value})
 
         else:
             return json.dumps({"Error": "Bad format file"})

@@ -1,7 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-#from core.log import *
 import yaml
 import os
 import sys
@@ -10,11 +6,10 @@ import sys
 class Config:
     """Operation yaml config."""
     def __init__(self):
-        #log.debug("class Config: __init__()")
         if os.path.isfile('conf/conf.yaml'):
             self.__configYaml = yaml.load(open('conf/conf.yaml'))
         else:
-            #logging.error("ERROR: file conf/conf.yaml not found")
+            print("ERROR: file conf/conf.yaml not found")
             sys.exit()
 
     def get_conf(self):
