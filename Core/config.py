@@ -2,7 +2,6 @@ import yaml
 import os
 import sys
 
-
 class Config:
     """Operation yaml config."""
     def __init__(self):

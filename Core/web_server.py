@@ -1,5 +1,5 @@
 from flask import Flask, request, send_from_directory
-from core.config import get_conf
+from Core.config import get_conf
 import json
 import time
 import hashlib

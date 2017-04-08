@@ -1,4 +1,4 @@
-from core.config import get_conf
+from Core.config import get_conf
 import psycopg2
 import sys
 
