@@ -50,6 +50,7 @@ contract PayForFlag {
         }
     }
     
+    
     //compare strings
     //TODO: change string logic to hashes logic
     function stringsEqual(string x, string y) private returns (bool)
