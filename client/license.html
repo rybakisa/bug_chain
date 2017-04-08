@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/license.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="#bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+
+<div class="container col-lg-8">
+    <p align="left"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet justo sit amet dolor
+        molestie pharetra
+        ac sit amet velit. Sed condimentum molestie elit nec placerat. Maecenas ut metus est. Vivamus et pellentesque
+        enim. Nam egestas, leo ut consequat mattis, enim augue tristique leo, quis tempus turpis tellus eu nisl. Duis
+        sagittis, libero vitae pellentesque tempor, velit sem semper neque, quis sollicitudin metus elit in sem. Sed
+        elementum, lorem vel malesuada porta, felis nisi dignissim justo, eu efficitur odio ligula ac orci.
+    </p>
+    <p>
+        Aenean ligula velit, iaculis sed mollis eu, accumsan non nisi. Aenean at urna imperdiet, feugiat velit a,
+        fringilla massa. Sed lobortis velit id justo tempus, at maximus ipsum venenatis. Nam tincidunt ipsum ut eros
+        lacinia, ac elementum sapien rhoncus. Integer dapibus faucibus velit vel pharetra. Vestibulum ante ipsum primis
+        in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque blandit vel ligula vitae placerat.
+    </p>
+    <p>
+        Pellentesque vestibulum ullamcorper enim sed efficitur. Nulla posuere, nisl non dictum gravida, sapien dui
+        rhoncus purus, at iaculis elit dui ut erat. Vivamus non fermentum nunc, at tincidunt lorem. Maecenas diam augue,
+        maximus sed ultricies eu, tristique vel enim. Etiam tincidunt rutrum urna ut semper. Vestibulum bibendum augue
+        ac orci feugiat, ut molestie arcu sollicitudin. Nunc faucibus lacus id turpis luctus, nec scelerisque quam
+        vestibulum. Integer auctor vel sem a fermentum. Curabitur quis pretium ex, ut tempus odio. Sed laoreet turpis ac
+        ante ultricies, et mattis quam molestie. Cras porta quam fringilla nisi accumsan, non dapibus nulla cursus.
+        Aliquam a justo eros. Proin non sem libero.
+    </p>
+    <p>
+        Aenean consequat diam at viverra viverra. Donec vitae tortor finibus, interdum urna vitae, tincidunt sem.
+        Suspendisse mattis magna quis dui gravida, malesuada rutrum tortor pretium. Donec ut rutrum neque. Ut eget velit
+        consequat, condimentum purus vitae, placerat urna. Vestibulum ipsum lectus, sodales ut rutrum eu, lobortis ac
+        ipsum. Vestibulum efficitur est non justo luctus mattis. Pellentesque et libero iaculis, condimentum nunc eget,
+        pellentesque enim. Pellentesque sed tincidunt metus, ac cursus leo. Mauris ultrices convallis lorem ac varius.
+        Curabitur vel nisi quis sapien rhoncus bibendum vel nec ligula.
+    </p>
+    <p>
+        Quisque ac sapien nec lacus convallis ultricies. Sed ut libero quis felis consectetur varius quis id erat. Sed
+        nec ultrices lacus, vitae aliquet neque. Proin quis condimentum leo. Etiam eu metus tempor, tincidunt mi vel,
+        consectetur nisl. Nunc eget vestibulum massa. Aliquam at velit nec ipsum volutpat malesuada. Vivamus a viverra
+        velit. In elit turpis, venenatis vel tempor nec, tempus a lectus.
+    </p>
+
+    <div class="row">
+
+        <div class="checkbox">
+            <button class="btn btn-success left btn-lg" id='acceptButton' type="submit" disabled>Продолжить
+            </button>
+
+            <label>
+                <input id="checkAccept" type="checkbox" value="accept">
+                Принимаю соглашение
+            </label>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    let acceptButton = $('#acceptButton');
+    $('#checkAccept').on('click', function () {
+        if (this.checked) {
+            acceptButton.prop('disabled', false);
+        } else {
+            acceptButton.prop('disabled', true);
+        }
+    });
+
+    acceptButton.on('click', function () {
+        window.location.href = ("registration.html");
+    });
+
+</script>
+
+</body>
+</html>

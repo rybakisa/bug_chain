@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="#bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="row">
+        <!--<div class="col-md-4">-->
+        <button class="btn btn-success left btn-lg" type="submit">Клиент</button>
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+        <button class="btn btn-info right btn-lg" type="submit">Хакер</button>
+        <!--</div>-->
+    </div>
+</div>
+<script>
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    if (getCookie('email') !== '') {
+        let logOut = document.createElement('button');
+        logOut.text = 'Выйти';
+        logOut.class = "btn btn-danger navbar-btn";
+        let personalCabinet = document.createElement('button');
+        personalCabinet.text = 'Личный кабинет';
+        personalCabinet.class = "btn btn-primary navbar-btn";
+        $('#bar').append(logOut);
+        $('#bar').append(personalCabinet);
+    }
+
+    $('.left').on('click', function () {
+        window.location.href = ("auth.html");
+    });
+
+    $('.right').on('click', function () {
+        window.location.href = ("hacker.html");
+    });
+
+</script>
+
+</body>
+</html>

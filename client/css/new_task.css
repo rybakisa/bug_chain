@@ -1,0 +1,25 @@
+.container {
+    top: 10%;
+    left: 10%;
+    position: absolute;
+}
+
+h1 {
+    text-align: center;
+    color: #3cd463;
+}
+
+button {
+    background-color: #3cd463;
+    color: white;
+    left: 40%;
+    position: absolute;
+}
+
+span {
+    text-align: center;
+}
+
+label {
+    color: #3cd463;
+}
