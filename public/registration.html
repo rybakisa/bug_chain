@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="javascript/common.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="#bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+
+<div class="container col-lg-8">
+    <form class="form-horizontal">
+        <h1>Регистрация</h1>
+        <div class="form-group">
+            <label for="clientName" class="col-sm-3 control-label">Название/Имя</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="clientName" required>
+            </div>
+        </div>
+
+        <div class="form-group col-lg-12">
+            <label for="clientDescription" class="col-sm-3 control-label">Описание</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" id="clientDescription" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group col-lg-12">
+            <label for="clientEmail" class="col-sm-3 control-label">Адрес электронной почты</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control " id="clientEmail" required>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label for="clientPass" class="col-sm-3 control-label">Пароль</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="clientPass" required>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="col-sm-12">
+        <button type="submit" id='registrate' class="btn btn-lg col-sm-12">Зарегистрироваться</button>
+    </div>
+</div>
+
+
+<script>
+
+    $('#registrate').on('click', function () {
+        let client = {};
+        client.name = $('#clientName').val();
+        client.description = $('#clientDescription').val();
+        client.email = $('#clientEmail').val();
+        client.password = $('#clientPass').val();
+        $.ajax({
+            url: '/api/clients',
+            dataType: 'json',
+            data: client,
+            type: 'POST',
+            statusCode: {
+                200: function (result) {
+                    setCookie("email", client.email);
+                    window.location.href = ("profile.html");
+                },
+                409: function (result) {
+                    alert("Пользователь с таким почтовым адресом или именем уже есть в системе");
+                }
+            }
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

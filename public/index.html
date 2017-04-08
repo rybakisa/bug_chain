@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="javascript/common.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="row">
+        <!--<div class="col-md-4">-->
+        <button class="btn btn-success left btn-lg resize" type="submit">Клиент</button>
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+        <button class="btn btn-info right btn-lg resize" type="submit">Хакер</button>
+        <!--</div>-->
+    </div>
+</div>
+<script>
+    setLogOut($('#bar'));
+    setProfile($('#bar'));
+
+    $('.left').on('click', function () {
+        window.location.href = ("auth.html");
+    });
+
+    $('.right').on('click', function () {
+        window.location.href = ("hacker.html");
+    });
+
+</script>
+
+</body>
+</html>

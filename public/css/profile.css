@@ -1,0 +1,22 @@
+h1 {
+    text-align: center;
+    color: #3cd463;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    background-color: #3cd463;
+}
+
+.container {
+    top: 5%;
+    left: 10%;
+    position: absolute;
+}
+
+.resize {
+    width: 250px;
+    height: auto;
+}
+

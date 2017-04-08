@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/new_task.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="javascript/common.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+
+<div class="container col-lg-8">
+    <form class="form-horizontal">
+        <h1>Создать задание</h1>
+        <div class="form-group">
+            <label for="taskName" class="col-sm-3 control-label">Название задания</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="taskName" placeholder="Имя, отображаемое в списке заданий">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="taskCount" class="col-sm-3 control-label">Количество успешных эксплоитов</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" id="taskCount" placeholder="0">
+            </div>
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="taskIp" class="col-sm-7 control-label">Ip-адрес тестового сервера</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="taskIp" placeholder="0.0.0.0">
+            </div>
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="taskPort" class="col-sm-6 control-label">Порт</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control" id="taskPort" placeholder="0000">
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <span id="helpBlock" class="help-block">Не указывайте адрес рабочего сервера. Тестовый сервер используется для поиска уязвимостей в системе.</span>
+        </div>
+
+        <div class="form-group col-lg-12">
+            <label for="taskDescription" class="col-sm-3 control-label">Описание задания</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" id="taskDescription" rows="3"
+                          placeholder="Краткое описание задания"></textarea>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="taskPrice" class="col-sm-3 control-label">Оплата</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control" id="taskPrice" placeholder="ETH">
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label for="taskFlag" class="col-sm-3 control-label">"Флаг"</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="taskFlag" placeholder="Какая-то строка">
+            </div>
+        </div>
+        <div class="form-group ">
+            <b><p class="col-sm-2">Срок действия контракта</p></b>
+            <label for="taskFromDate" class="col-sm-1 control-label">c</label>
+            <div class="col-sm-3">
+                <input type="date" class="form-control" id="taskFromDate" value="2012-01-01">
+            </div>
+            <label for="taskToDate" class="col-sm-1 control-label">до</label>
+            <div class="col-sm-3">
+                <input type="date" class="form-control" id="taskToDate" value="2012-02-01">
+            </div>
+        </div>
+
+
+    </form>
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" id="addTaskButton" class="btn">Сохранить контракт</button>
+    </div>
+</div>
+
+
+<script>
+    setLogOut($('#bar'));
+    setProfile($('#bar'));
+
+    $('#addTaskButton').on('click', function () {
+        let dataToServer = {};
+        dataToServer.name = $('#taskName').val();
+        dataToServer.count = $('#taskCount').val();
+        dataToServer.ip = $('#taskIp').val();
+        dataToServer.port = $('#taskPort').val();
+        dataToServer.description = $('#taskDescription').val();
+        dataToServer.price = $('#taskPrice').val();
+        dataToServer.flag = $('#taskFlag').val();
+        let from = new Date($('#taskFromDate').val());
+        dataToServer.yearFrom = from.getFullYear();
+        dataToServer.monthFrom = from.getMonth() + 1;
+        dataToServer.dayFrom = from.getDate();
+        let to = new Date($('#taskToDate').val());
+        dataToServer.yearTo = to.getFullYear();
+        dataToServer.monthTo = to.getMonth() + 1;
+        dataToServer.dayTo = to.getDate();
+
+        dataToServer.email = getCookie('email');
+        $.ajax({
+            url: '/api/tasks',
+            dataType: 'json',
+            data: dataToServer,
+            type: 'POST',
+            statusCode: {
+                200: function (result) {
+                    window.location.href = ("profile.html");
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

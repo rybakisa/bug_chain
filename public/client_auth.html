@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/client_auth.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="#bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="...">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="col-md-4">
+        <form>
+            <div class="form-group ">
+                <label for="inputEmail">Почтовый адрес</label>
+                <input type="email" class="form-control " id="inputEmail" placeholder="Почтовый адрес">
+            </div>
+            <div class="form-group ">
+                <label for="inputPass">Пароль</label>
+                <input type="password" class="form-control" id="inputPass" placeholder="Пароль">
+            </div>
+
+            <button type="submit" id="enter" class="btn btn-success">Войти</button>
+            <button type="submit" id="signup" class="btn btn-default">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+<script>
+    function setCookie(name, value, options) {
+        options = options || {};
+
+        var expires = options.expires;
+
+        if (typeof expires == "number" && expires) {
+            var d = new Date();
+            d.setTime(d.getTime() + expires * 1000);
+            expires = options.expires = d;
+        }
+        if (expires && expires.toUTCString) {
+            options.expires = expires.toUTCString();
+        }
+
+        value = encodeURIComponent(value);
+
+        var updatedCookie = name + "=" + value;
+
+        for (var propName in options) {
+            updatedCookie += "; " + propName;
+            var propValue = options[propName];
+            if (propValue !== true) {
+                updatedCookie += "=" + propValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+
+    //    function getCookie(name) {
+    //        var matches = document.cookie.match(new RegExp(
+    //            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    //        ));
+    //        return matches ? decodeURIComponent(matches[1]) : undefined;
+    //    }
+
+    //    if (getCookie('email') !== '') {
+    //        let logOut = document.createElement('button');
+    //        logOut.text = 'Выйти';
+    //        logOut.class = "btn btn-danger navbar-btn";
+    //        let personalCabinet = document.createElement('button');
+    //        personalCabinet.text = 'Личный кабинет';
+    //        personalCabinet.class = "btn btn-primary navbar-btn";
+    //        $('#bar').append(logOut);
+    //        $('#bar').append(personalCabinet);
+    //    }
+
+
+    $('#enter').on('click', function () {
+        queryParameters = $.param({
+            email: $('#inputEmail').val().trim(),
+            password: $('#inputPass').val().trim()
+        });
+        $.ajax({
+            url: '/api/auth?' + queryParameters,
+            type: 'GET',
+            statusCode: {
+                200: function (result) {
+                    setCookie("email", $('#inputEmail').val());
+                    window.location.href = ("client_list.html");
+                },
+                403: function (result) {
+                    alert("Пользователь с таким логином и паролем не найден");
+                }
+            }
+        });
+    });
+
+    $('#signup').on('click', function () {
+        queryParameters = $.param({
+            email: $('#inputEmail').val().trim(),
+            password: $('#inputPass').val().trim()
+        });
+
+        $.ajax({
+            url: '/api/signup?' + queryParameters,
+            type: 'POST',
+            statusCode: {
+                200: function (result) {
+                    setCookie("email", $('#inputEmail').val());
+                    window.location.href = ("license.html");
+                },
+                409: function (result) {
+                    alert("Пользователь с таким логином уже есть в системе");
+                }
+            }
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

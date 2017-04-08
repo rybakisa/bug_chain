@@ -1,0 +1,19 @@
+.container {
+    top: 15%;
+    left: 15%;
+    position: absolute;
+}
+
+img {
+    height: 130%;
+    width: auto;
+}
+
+p {
+    text-indent: 20px;
+    text-align: justify;
+}
+
+/*label {*/
+/*left: 80%;*/
+/*}*/
