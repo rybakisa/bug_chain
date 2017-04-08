@@ -1,0 +1,49 @@
+pragma solidity ^0.4.8;
+
+contract PayForFlag {
+    
+    address public owner;
+    address hacker;
+    uint public max_submissions;
+    string flag;
+    
+    function PayForFlag(string _flag, uint _ms)
+    {
+        owner = msg.sender;
+        flag = _flag;
+        max_submissions = _ms;
+    }
+    
+    function kill()
+    {
+        if (msg.sender == owner)
+        {
+            selfdestruct(owner);
+        }
+    }
+    
+    function stringsEqual(string x, string y) private returns (bool)
+    {
+        return sha3(x) == sha3(y) ? true : false;
+    }
+    
+    function SubmitFlag(string x) payable returns (bool)
+    {
+        hacker = msg.sender;
+        if (stringsEqual(x, flag))
+        {
+            if(!hacker.send(this.balance))
+                {
+                    throw;    
+                }
+                
+            selfdestruct(owner);
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
