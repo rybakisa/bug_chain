@@ -1,0 +1,11 @@
+conf:
+  db:
+    PG_HOST: '192.168.1.2'
+    PG_PORT: '80'
+    PG_DB: 'db_name'
+    PG_USER: 'user_name'
+    PG_PWD: 'passwd'
+  web:
+    IP: '0.0.0.0'
+    PORT: 5000
+    UPLOAD_FOLDER: "/path/to/uploads"
