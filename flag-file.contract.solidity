@@ -7,8 +7,8 @@ contract SolveFileFlagProblem {
     //global contract storage
     address public owner;           // deployer of the contract
     address public admin;           // wallet from exploit testing server
-    uint public divident;           // to divide fund on flag & file parts
     uint public divisor;            // to divide fund on flag & file parts
+    uint public divident;           // to divide fund on flag & file parts
     bool submissions_exist;         // any correct submissions in contract?
     bool file_test_passed;          // exploit checked sucsessfully
     bool flag_test_passed;          // corret flag finded
@@ -30,19 +30,6 @@ contract SolveFileFlagProblem {
         flag_test_passed = false;
         admin = 0x02b3674D222dDee4AeE5c457F67905B9fC51d082;
     }
-
-    /// This function store some ethers
-    /// to contract
-    function CreateFund(uint _fund) payable
-    {
-        // there is no submission yet
-        // so, we can increase the fund
-        if ((msg.sender == owner) && (!flag_test_passed))
-        {
-            //fund = fund + _fund;
-            throw;
-        }
-    } 
     
     /// This function destructs the contract 
     /// and returns contract's balance to owner.
@@ -116,5 +103,8 @@ contract SolveFileFlagProblem {
             return false;
         }
     }
+
+    // fallback function
+    function() payable { }
 
 }
