@@ -28,38 +28,38 @@ def upload_file():
     if request.method == 'POST':
         data = request.args.to_dict()
         data_json = json.loads(json.dumps(data)) # what?!
-        #try:
-        if data_json['flag'] and data_json['file'] and data_json['filename'] and data_json['address'] and data_json['interface']:
-            address = data_json['address']
-            interface = data_json['interface']
-            flag = data_json['flag']
-            file = data_json['file']
-            filename = data_json['filename']
+        try:
+            if data_json['flag'] and data_json['file'] and data_json['filename'] and data_json['address'] and data_json['interface']:
+                address = data_json['address']
+                interface = data_json['interface']
+                flag = data_json['flag']
+                file = data_json['file']
+                filename = data_json['filename']
 
-            if filename == '':
-                return json.dumps({"Error": "No selected files"})
+                if filename == '':
+                    return json.dumps({"Error": "No selected files"})
 
-            if allowed_file(filename):
-                hash_value = set_hash()
-                create_file = open(config['web']['UPLOAD'] + "/" + hash_value, "w")
-                create_file.write(file)
-                create_file.close()
+                if allowed_file(filename):
+                    hash_value = set_hash()
+                    create_file = open(config['web']['UPLOAD'] + "/" + hash_value, "w")
+                    create_file.write(file)
+                    create_file.close()
 
-                c = Check(hash_value, flag)
-                c.docker_run()
-                status = c.exploit_run()
-                c.exit()
+                    c = Check(hash_value, flag)
+                    c.docker_run()
+                    status = c.exploit_run()
+                    c.exit()
 
-                state = json.dumps({"Message": "Uploaded", "Status": status, "URL": url_base + hash_value})
-                sql = "INSERT INTO status(hash, state, interface, address) VALUES ('{0}','{1}'," \
-                      "'{2}','{3}')".format(hash_value,json.dumps({"Status": status, "URL": url_base + hash_value, "Message": "Uploaded"}),
-                                           interface, address)
-                db.query(sql)
-                return state
-            else:
-                return json.dumps({"Error": "Bad format file"})
-        #except:
-        #    return json.dumps({"Error": "Not all fields are filled"})
+                    state = json.dumps({"Message": "Uploaded", "Status": status, "URL": url_base + hash_value})
+                    sql = "INSERT INTO status(hash, state, interface, address) VALUES ('{0}','{1}'," \
+                          "'{2}','{3}')".format(hash_value,json.dumps({"Status": status, "URL": url_base + hash_value, "Message": "Uploaded"}),
+                                               interface, address)
+                    db.query(sql)
+                    return state
+                else:
+                    return json.dumps({"Error": "Bad format file"})
+        except:
+            return json.dumps({"Error": "Not all fields are filled"})
 
     elif request.method == 'GET':
         req = request.args.to_dict()
