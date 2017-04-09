@@ -5,110 +5,106 @@ pragma solidity ^0.4.8;
 contract SolveFileFlagProblem {
     
     //global contract storage
-    address public owner;           //deployer of the contract
-    uint public fund;               //size of fund
-    bool submissions_exist;         //any correct submissions in contract?
-    bool file_test_passed;          //exploit checked sucsessfully
-    bool flag_test_passed;          //corret flag finded
-    string flag;                    //secret string
+    address public owner;           // deployer of the contract
+    address public admin;           // wallet from exploit testing server
+    uint public fund;               // size of fund
+    uint public divident;                  // to divide fund on flag & file parts
+    uint public divisor;                   // to divide fund on flag & file parts
+    bool submissions_exist;         // any correct submissions in contract?
+    bool file_test_passed;          // exploit checked sucsessfully
+    bool flag_test_passed;          // corret flag finded
+    bytes32 flag;                    // secret string
     
     //constructor:
+    //executes only, when contract deployed
     // store owner and flag
     function SolveFileFlagProblem(string _flag)
     {
         owner = msg.sender;
-        flag = _flag;
+        flag = sha3(_flag);
         file_test_passed = false;
         flag_test_passed = false;
     }
 
-    //sent money to contract
+    /// This function store some ethers
+    /// to contract
     function CreateFund(uint _fund) private
     {
         if (msg.sender == owner)
         {
-            //submissions not exists
-            // so, we can increse the fund
-            if (!submissions_exist)
+            // there is no submission yet
+            // so, we can increase the fund
+            if (!flag_test_passed)
             {
                 fund = fund + _fund;
             }
-            //TODO: give difference between
-            // sizes of funds to hacker who
-            // already submitted
         }
     } 
     
-    //destruct contract manually and send money back to
-    // contract owner
+    /// This function destructs the contract 
+    /// and returns contract's balance to owner.
+    /// Can be executed only when there is no
+    /// submissions yet and only owner of contract
     function kill()
     {
-        if (msg.sender == owner)
+        if (msg.sender == owner && !flag_test_passed && !file_test_passed)
         {
             selfdestruct(owner);
         }
     }
     
-
     //compare strings
     //TODO: change string logic to hashes logic
-    function stringsEqual(string x, string y) private returns (bool)
+    function isFlagCorrect(string _flag) constant returns (bool)
     {
-        return sha3(x) == sha3(y) ? true : false;
+        return sha3(_flag) == flag ? true : false;
     }
     
-    //
+    /// You can submit youre flag
+    /// by executing this function
     function SubmitFlag(string x) payable returns (bool)
     {
         //hacker's address to pay in
         address hacker = msg.sender;
 
-        if (!flag_test_passed && stringsEqual(x, flag))
+        if (!flag_test_passed && isFlagCorrect(flag))
         {
             flag_test_passed = true;
+            hacker.transfer(fund*(divident/divisor));
+        }
 
-            if (file_test_passed)
-            {
-                if(!hacker.send(fund))
-                {
-                    throw;    
-                }
-                else
-                {
-                    //closing contract
-                    selfdestruct(owner);
-                }
-            }
+        if (this.balance == 0)
+        {
+            selfdestruct(owner);
         }
         
     }
 
-    //
-    function SubmitExploit(string x) payable returns (bool)
+    /// This function can only be called by
+    /// administarator's wallet or contract's owner
+    function VerifyExploit() payable returns (bool)
     {
-        //if user id admin (robot from testing server)
-        //or huuuuman with extended permissions
-        //TODO: chech status of user in wallet-contracts
-        //if ( && !file_test_passed)
+        address hacker = msg.sender;
+        
+        if (msg.sender == admin || msg.sender == owner)
         {
             file_test_passed = true;
+            
             if (flag_test_passed)
             {
-                if(!hacker.send(fund))
-                {
-                    throw;    
-                }
-                else
-                {
-                    //closing contract
-                    selfdestruct(owner);
-                }
+                hacker.transfer(fund - fund*(divident/divisor));
             }
+
+            if (this.balance == 0)
+            {
+                selfdestruct(owner);
+            }
+
         }
         else
         {
             return false;
         }
     }
-    
+
 }
