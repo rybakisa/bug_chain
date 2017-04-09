@@ -1,5 +1,7 @@
 from flask import Flask, request, send_from_directory
-from Core.config import get_conf
+from core.config import get_conf
+from core.check import Check
+from core.log import *
 import json
 import time
 import hashlib
@@ -17,10 +19,10 @@ def allowed_file(filename):
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = ('c', 'py', 'rb', 'cpp', 'sh')
 
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-
-    url_base = "http://0.0.0.0:5001/upload/"
+    url_base = "http://0.0.0.0:5001/upload?id="
     if request.method == 'POST':
         if 'file' not in request.files:
             return json.dumps({"Error": "No file part"})
@@ -31,24 +33,28 @@ def upload_file():
 
         elif file and allowed_file(file.filename):
             hash_value = set_hash()
-            file.save(config['web']['UPLOAD_FOLDER'] + "/" + hash_value)
-            return json.dumps({"Message": "Upload", "Status": "Not check", "URL": url_base + hash_value})
+            file.save(config['web']['UPLOAD'] + "/" + hash_value)
+            c = Check(hash_value)
+            c.docker_run()
+            c.exploit_run()
+            c.exit()
+            return json.dumps({"Message": "Uploaded", "Status": "Not check", "URL": url_base + hash_value})
 
         else:
             return json.dumps({"Error": "Bad format file"})
-
 
     elif request.method == 'GET':
         req = request.args.to_dict()
         if req['id']:
             try:
                 return send_from_directory(directory=config['web']['UPLOAD_FOLDER'],
-                                           filename=req['id'],
-                                           as_attachment=True)
+                                            filename=req['id'],
+                                            as_attachment=True)
             except:
                 return json.dumps({"Error": "File does not exist"})
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     config = get_conf()['conf']
     app.run(host=config['web']['IP'], port=config['web']['PORT'])
+

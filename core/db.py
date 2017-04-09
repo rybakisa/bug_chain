@@ -1,4 +1,5 @@
-from Core.config import get_conf
+from core.config import get_conf
+from core.log import log
 import psycopg2
 import sys
 
@@ -17,7 +18,7 @@ class DbLocal():
             self.db_conn = psycopg2.connect(auth_str)
             self.db_cursor = self.db_conn.cursor()
         except:
-            print("Error connecting to the database.")
+            log.error("Error connecting to the database.")
             sys.exit(0)
 
     def query(self, sql, data):

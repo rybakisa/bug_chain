@@ -1,0 +1,89 @@
+2017-04-09 12:54:50,831 - root - INFO - init : 8 - start
+2017-04-09 12:55:12,845 - root - INFO - init : 8 - start
+2017-04-09 12:55:24,083 - root - INFO - init : 8 - start
+2017-04-09 12:55:38,906 - root - INFO - init : 8 - start
+2017-04-09 12:55:57,106 - root - INFO - init : 8 - start
+2017-04-09 12:56:39,140 - root - INFO - init : 8 - start
+2017-04-09 12:57:22,454 - root - INFO - init : 8 - start
+2017-04-09 12:57:55,053 - root - INFO - init : 8 - start
+2017-04-09 12:58:37,558 - root - INFO - init : 8 - start
+2017-04-09 12:59:22,139 - root - INFO - init : 8 - start
+2017-04-09 12:59:29,904 - root - INFO - init : 8 - start
+2017-04-09 13:00:44,840 - root - INFO - init : 8 - start
+2017-04-09 13:01:12,037 - root - INFO - init : 8 - start
+2017-04-09 13:01:54,295 - root - INFO - init : 8 - start
+2017-04-09 13:02:04,314 - root - INFO - init : 8 - start
+2017-04-09 13:02:43,766 - root - INFO - init : 8 - start
+2017-04-09 13:03:07,234 - root - INFO - init : 8 - start
+2017-04-09 13:03:36,344 - root - INFO - init : 8 - start
+2017-04-09 13:03:41,404 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:06:01,368 - core.web_server - ERROR - app : 1587 - Exception on /upload [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+TypeError: upload_file() missing 1 required positional argument: 'self'
+2017-04-09 13:06:01,396 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:06:01] "POST /upload HTTP/1.1" 500 -
+2017-04-09 13:07:28,028 - root - INFO - init : 10 - finish
+2017-04-09 13:07:30,347 - root - INFO - init : 8 - start
+2017-04-09 13:07:47,614 - root - INFO - init : 8 - start
+2017-04-09 13:07:52,667 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:08:34,447 - root - INFO - init : 10 - finish
+2017-04-09 13:08:41,675 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:08:42,551 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:08:42] "POST /upload HTTP/1.1" 404 -
+2017-04-09 13:09:28,528 - root - INFO - init : 8 - start
+2017-04-09 13:09:28,531 - root - INFO - init : 10 - finish
+2017-04-09 13:09:36,383 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:09:37,402 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:09:37] "POST /upload HTTP/1.1" 404 -
+2017-04-09 13:09:57,360 - root - INFO - init : 8 - start
+2017-04-09 13:09:57,361 - root - INFO - init : 10 - finish
+2017-04-09 13:10:05,910 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:10:05,997 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:10:05] "POST /upload HTTP/1.1" 404 -
+2017-04-09 13:10:28,153 - root - INFO - init : 8 - start
+2017-04-09 13:10:28,157 - root - INFO - init : 10 - finish
+2017-04-09 13:10:35,701 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:10:36,078 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:10:36] "POST /upload HTTP/1.1" 404 -
+2017-04-09 13:10:40,613 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:10:40] "POST /upload HTTP/1.1" 404 -
+2017-04-09 13:12:59,580 - root - INFO - init : 9 - start
+2017-04-09 13:15:25,411 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:15:39,961 - __main__ - ERROR - app : 1587 - Exception on /upload [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+TypeError: upload_file() missing 1 required positional argument: 'self'
+2017-04-09 13:15:39,981 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:15:39] "POST /upload HTTP/1.1" 500 -
+2017-04-09 13:15:54,558 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:15:54,924 - docker.auth - DEBUG - auth : 221 - Trying paths: ['/Users/d.sunyaev/.docker/config.json', '/Users/d.sunyaev/.dockercfg']
+2017-04-09 13:15:54,925 - docker.auth - DEBUG - auth : 228 - No config file found
+2017-04-09 13:15:55,534 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/create HTTP/1.1" 201 90
+2017-04-09 13:15:55,548 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "GET /v1.26/containers/35d6933f1a31e7114448fbc7d5258654e6aaed109367450b2f5600594cb14b70/json HTTP/1.1" 200 None
+2017-04-09 13:15:56,408 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/35d6933f1a31e7114448fbc7d5258654e6aaed109367450b2f5600594cb14b70/start HTTP/1.1" 204 0
+2017-04-09 13:15:59,107 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/35d6933f1a31e7114448fbc7d5258654e6aaed109367450b2f5600594cb14b70/kill HTTP/1.1" 204 0
+2017-04-09 13:15:59,110 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:15:59] "POST /upload HTTP/1.1" 200 -
+2017-04-09 13:17:35,530 - werkzeug - INFO - _internal : 87 -  * Running on http://0.0.0.0:5001/ (Press CTRL+C to quit)
+2017-04-09 13:17:41,427 - docker.auth - DEBUG - auth : 221 - Trying paths: ['/Users/d.sunyaev/.docker/config.json', '/Users/d.sunyaev/.dockercfg']
+2017-04-09 13:17:41,427 - docker.auth - DEBUG - auth : 228 - No config file found
+2017-04-09 13:17:41,792 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/create HTTP/1.1" 201 90
+2017-04-09 13:17:41,806 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "GET /v1.26/containers/5b8e8367b6a8f52a4b14fd6cc9067163492b663235104e3fb569f31480003956/json HTTP/1.1" 200 None
+2017-04-09 13:17:42,470 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/5b8e8367b6a8f52a4b14fd6cc9067163492b663235104e3fb569f31480003956/start HTTP/1.1" 204 0
+2017-04-09 13:17:45,114 - requests.packages.urllib3.connectionpool - DEBUG - connectionpool : 395 - "POST /v1.26/containers/5b8e8367b6a8f52a4b14fd6cc9067163492b663235104e3fb569f31480003956/kill HTTP/1.1" 204 0
+2017-04-09 13:17:45,116 - werkzeug - INFO - _internal : 87 - 127.0.0.1 - - [09/Apr/2017 13:17:45] "POST /upload HTTP/1.1" 200 -
