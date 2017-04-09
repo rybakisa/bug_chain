@@ -7,7 +7,6 @@ contract SolveFileFlagProblem {
     //global contract storage
     address public owner;           // deployer of the contract
     address public admin;           // wallet from exploit testing server
-    uint public fund;               // size of fund
     uint public divident;           // to divide fund on flag & file parts
     uint public divisor;            // to divide fund on flag & file parts
     bool submissions_exist;         // any correct submissions in contract?
@@ -18,28 +17,29 @@ contract SolveFileFlagProblem {
     //constructor:
     //executes only, when contract deployed
     // store owner and flag
-    function SolveFileFlagProblem(string _flag, uint _divisor, uint _divident)
+    //function SolveFileFlagProblem(string _flag, uint _divisor, uint _divident)
+    function SolveFileFlagProblem(string _flag)
     {
         owner = msg.sender;
         flag = sha3(_flag);
-        divident = _divident;
-        divisor = _divisor;
+        //divisor = _divisor;
+        //divident = _divident;
+        divisor = 2;
+        divident = 3;
         file_test_passed = false;
         flag_test_passed = false;
     }
 
     /// This function store some ethers
     /// to contract
-    function CreateFund(uint _fund) private
+    function CreateFund(uint _fund) payable
     {
-        if (msg.sender == owner)
+        // there is no submission yet
+        // so, we can increase the fund
+        if ((msg.sender == owner) && (!flag_test_passed))
         {
-            // there is no submission yet
-            // so, we can increase the fund
-            if (!flag_test_passed)
-            {
-                fund = fund + _fund;
-            }
+            //fund = fund + _fund;
+            throw;
         }
     } 
     
@@ -73,7 +73,7 @@ contract SolveFileFlagProblem {
         {
             flag_test_passed = true;
 
-            if(!hacker.send(fund*(divident/divisor)))
+            if(!hacker.send(this.balance*(divident/divisor)))
             {
                 throw;    
             }
@@ -98,7 +98,7 @@ contract SolveFileFlagProblem {
             
             if (flag_test_passed)
             {
-                if(!hacker.send(fund - fund*(divident/divisor)))
+                if(!hacker.send(this.balance - this.balance*(divident/divisor)))
                 {
                     throw;    
                 }
