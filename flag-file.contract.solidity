@@ -8,20 +8,22 @@ contract SolveFileFlagProblem {
     address public owner;           // deployer of the contract
     address public admin;           // wallet from exploit testing server
     uint public fund;               // size of fund
-    uint public divident;                  // to divide fund on flag & file parts
-    uint public divisor;                   // to divide fund on flag & file parts
+    uint public divident;           // to divide fund on flag & file parts
+    uint public divisor;            // to divide fund on flag & file parts
     bool submissions_exist;         // any correct submissions in contract?
     bool file_test_passed;          // exploit checked sucsessfully
     bool flag_test_passed;          // corret flag finded
-    bytes32 flag;                    // secret string
+    bytes32 flag;                   // secret string
     
     //constructor:
     //executes only, when contract deployed
     // store owner and flag
-    function SolveFileFlagProblem(string _flag)
+    function SolveFileFlagProblem(string _flag, uint _divisor, uint _divident)
     {
         owner = msg.sender;
         flag = sha3(_flag);
+        divident = _divident;
+        divisor = _divisor;
         file_test_passed = false;
         flag_test_passed = false;
     }
@@ -67,10 +69,14 @@ contract SolveFileFlagProblem {
         //hacker's address to pay in
         address hacker = msg.sender;
 
-        if (!flag_test_passed && isFlagCorrect(flag))
+        if (!flag_test_passed && isFlagCorrect(x))
         {
             flag_test_passed = true;
-            hacker.transfer(fund*(divident/divisor));
+
+            if(!hacker.send(fund*(divident/divisor)))
+            {
+                throw;    
+            }
         }
 
         if (this.balance == 0)
@@ -92,7 +98,10 @@ contract SolveFileFlagProblem {
             
             if (flag_test_passed)
             {
-                hacker.transfer(fund - fund*(divident/divisor));
+                if(!hacker.send(fund - fund*(divident/divisor)))
+                {
+                    throw;    
+                }
             }
 
             if (this.balance == 0)
