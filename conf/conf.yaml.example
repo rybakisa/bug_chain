@@ -9,3 +9,9 @@ conf:
     IP: '0.0.0.0'
     PORT: 5000
     UPLOAD_FOLDER: "/path/to/uploads"
+  docker:
+    IP: '0.0.0.0'
+    PORT_FROM: 8080
+    PORT_TO: 80
+    NAME: 'name_docker_image'
+    UPLOAD: "/path/to/uploads"

@@ -21,9 +21,9 @@ class DbLocal():
             log.error("Error connecting to the database.")
             sys.exit(0)
 
-    def query(self, sql, data):
+    def query(self, sql):
         """ execute query """
-        self.db_cursor.execute(sql, data)
+        self.db_cursor.execute(sql)
         self.db_conn.commit()
 
     def fetch(self):
