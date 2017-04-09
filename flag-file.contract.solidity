@@ -28,6 +28,7 @@ contract SolveFileFlagProblem {
         divident = 3;
         file_test_passed = false;
         flag_test_passed = false;
+        admin = 0x02b3674D222dDee4AeE5c457F67905B9fC51d082;
     }
 
     /// This function store some ethers
