@@ -15,6 +15,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/web3/dist/web3.js"></script>
     <script src="javascript/common.js"></script>
 </head>
 <body>
@@ -80,30 +81,40 @@
 <script>
 
     $('#registrate').on('click', function () {
-        let client = {};
-        client.name = $('#clientName').val();
-        client.description = $('#clientDescription').val();
-        client.email = $('#clientEmail').val();
-        client.password = $('#clientPass').val();
-        client.purse = $('#clientPurse').val();
-        console.log(client);
-        $.ajax({
-            url: '/api/clients',
-            dataType: 'json',
-            data: client,
-            type: 'POST',
-            statusCode: {
-                200: function (result) {
-                    setCookie("email", client.email);
-                    window.location.href = ("profile.html");
-                },
-                409: function (result) {
-                    alert("Пользователь с таким почтовым адресом или именем уже есть в системе");
-                }
-            }
-        });
-    });
+        var Web3 = require('web3');
+        var web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.10.37:8102"));
 
+        let purse = $('#clientPurse').val();
+        try {
+            let balance = web3.eth.getBalance(purse);
+            let client = {};
+            client.name = $('#clientName').val();
+            client.description = $('#clientDescription').val();
+            client.email = $('#clientEmail').val();
+            client.password = $('#clientPass').val();
+            client.purse = $('#clientPurse').val();
+            console.log(client);
+            $.ajax({
+                url: '/api/clients',
+                dataType: 'json',
+                data: client,
+                type: 'POST',
+                statusCode: {
+                    200: function (result) {
+                        setCookie("email", client.email);
+                        window.location.href = ("profile.html");
+                    },
+                    409: function (result) {
+                        alert("Пользователь с таким почтовым адресом или именем уже есть в системе");
+                    }
+                }
+            });
+        } catch (e) {
+            alert("Пожалуйста, предоставьте действующий криптокошелек");
+        }
+
+
+    });
 
 </script>
 

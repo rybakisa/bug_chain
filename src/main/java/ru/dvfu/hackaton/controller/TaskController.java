@@ -39,12 +39,13 @@ public class TaskController {
     @RequestMapping(value = "/tasks", method = RequestMethod.POST)
     public void addTask(@RequestParam("email") String email,
                         @RequestParam("name") String name,
-                        @RequestParam("count") int count,
                         @RequestParam("ip") String ip,
                         @RequestParam("port") int port,
                         @RequestParam("description") String description,
                         @RequestParam("price") float price,
                         @RequestParam("flag") String flag,
+                        @RequestParam("address") String address,
+                        @RequestParam("contractJson") String contractJson,
                         @RequestParam("yearFrom") int yearFrom,
                         @RequestParam("monthFrom") int monthFrom,
                         @RequestParam("dayFrom") int dayFrom,
@@ -55,7 +56,7 @@ public class TaskController {
     {
         LocalDate from = LocalDate.of(yearFrom, monthFrom, dayFrom);
         LocalDate to = LocalDate.of(yearTo, monthTo, dayTo);
-        Task task = new Task(name, count, ip, port, description, price, flag, from, to);
+        Task task = new Task(name, ip, port, description, price, flag, from, to, address, contractJson);
         taskService.save(task);
 
         Client client = clientService.getClientByEmail(email);

@@ -45,11 +45,18 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="taskCount" class="col-sm-3 control-label">Количество успешных эксплоитов</label>
+            <label for="taskName" class="col-sm-3 control-label">Адрес контракта</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control" id="taskCount" placeholder="0">
+                <input type="text" class="form-control" id="taskAddress">
             </div>
         </div>
+        <div class="form-group">
+            <label for="taskJson" class="col-sm-3 control-label">Contract JSON Interface</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="taskJson">
+            </div>
+        </div>
+
         <div class="form-group col-lg-6">
             <label for="taskIp" class="col-sm-7 control-label">Ip-адрес тестового сервера</label>
             <div class="col-sm-5">
@@ -143,6 +150,8 @@
                         dataToServer.yearTo = to.getFullYear();
                         dataToServer.monthTo = to.getMonth() + 1;
                         dataToServer.dayTo = to.getDate();
+                        dataToServer.address = $('#taskAddress').val();
+                        dataToServer.contractJson = $('#taskJson').val();
 
                         dataToServer.email = getCookie('email');
                         $.ajax({

@@ -66,6 +66,44 @@
                         task.timeRest = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     }
                 }
+//                console.log(JSON.stringify(tasks));
+                $(function () {
+
+                    $("#jsGrid").jsGrid({
+                        height: "90%",
+                        width: "100%",
+
+                        sorting: true,
+                        editing: false,
+                        autoload: false,
+                        paging: false,
+
+
+                        data: tasks,
+
+                        fields: [
+                            {name: "name", title: "Название", type: "text", width: 100},
+                            {name: "count", title: "Максимальное количество победителей", type: "number", width: 100},
+                            {name: "price", title: "Сумма контракта(ETH)", type: "number", width: 100},
+                            {name: "timeRest", title: "Осталось дней до завершения задания", type: "text", width: 150},
+                            {
+                                type: "control",
+                                deleteButton: false,
+                                editButton: false,
+                                itemTemplate: function (value, item) {
+                                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                                    var $customButton = acceptTask(item);
+
+                                    return $result.add($customButton);
+                                }
+
+                            }
+                        ],
+
+                    });
+
+                });
+
             }
         }
     });
@@ -78,42 +116,6 @@
                 window.location.href = 'task.html';
             });
     }
-    $(function () {
-
-        $("#jsGrid").jsGrid({
-            height: "90%",
-            width: "100%",
-
-            sorting: true,
-            editing: false,
-            autoload: false,
-            paging: false,
-
-
-            data: tasks,
-
-            fields: [
-                {name: "name", title: "Название", type: "text", width: 100},
-                {name: "count", title: "Максимальное количество победителей", type: "number", width: 100},
-                {name: "price", title: "Сумма контракта(ETH)", type: "number", width: 100},
-                {name: "timeRest", title: "Осталось дней до завершения задания", type: "text", width: 150},
-                {
-                    type: "control",
-                    deleteButton: false,
-                    editButton: false,
-                    itemTemplate: function (value, item) {
-                        var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
-                        var $customButton = acceptTask(item);
-
-                        return $result.add($customButton);
-                    }
-
-                }
-            ],
-
-        });
-
-    });
 
 
 </script>

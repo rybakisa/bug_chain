@@ -93,7 +93,38 @@
                         let timeDiff = Math.abs(to.getTime() - from.getTime());
                         var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                         task.timeRest = diffDays;
-                        console.log(task.timeRest);
+
+                        $(function () {
+
+                            $("#jsGrid").jsGrid({
+                                height: "90%",
+                                width: "100%",
+
+                                sorting: true,
+                                editing: false,
+
+                                data: tasks,
+
+                                fields: [
+                                    {name: "name", title: "Название", type: "text", width: 100},
+                                    {name: "address", title: "Адрес Контракта", type: "text", width: 100},
+//                                    {name: "contractJson", title: "Contrac JSON Interface", type: "text", width: 100},
+                                    {name: "price", title: "Сумма контракта(ETH)", type: "number", width: 100},
+//                {name: "TimeTo", title: "Осталось до завершения задания", type: "text", width: 150},
+//                {name: "maxRate", title: "Максимальная ставка", type: "number", width: 100},
+                                    {
+                                        name: "timeRest",
+                                        title: "Осталось дней до завершения торгов",
+                                        type: "text",
+                                        width: 150
+                                    },
+                                    {name: "successes", title: "Успешно", type: "number", width: 100},
+                                    {name: "tries", title: "Попыток", type: "number", width: 100}
+                                ]
+                            });
+
+                        });
+
                     }
                 }
             }
@@ -103,32 +134,6 @@
     document.getElementById('addTaskButton').onclick = function () {
         window.location.href = ("client_add_new_task.html");
     };
-
-
-    $(function () {
-
-        $("#jsGrid").jsGrid({
-            height: "90%",
-            width: "100%",
-
-            sorting: true,
-            editing: false,
-
-            data: tasks,
-
-            fields: [
-                {name: "name", title: "Название", type: "text", width: 100},
-                {name: "count", title: "Максимальное количество победителей", type: "number", width: 100},
-                {name: "price", title: "Сумма контракта(ETH)", type: "number", width: 100},
-//                {name: "TimeTo", title: "Осталось до завершения задания", type: "text", width: 150},
-//                {name: "maxRate", title: "Максимальная ставка", type: "number", width: 100},
-                {name: "timeRest", title: "Осталось дней до завершения торгов", type: "text", width: 150},
-                {name: "successes", title: "Успешно", type: "number", width: 100},
-                {name: "tries", title: "Попыток", type: "number", width: 100}
-            ]
-        });
-
-    });
 
 
 </script>

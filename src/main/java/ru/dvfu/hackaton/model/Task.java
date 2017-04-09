@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * Created by anton on 07.04.17.
@@ -51,6 +50,13 @@ public class Task {
     @Getter
     @Setter
     private String flag;
+    @Getter
+    @Setter
+    private String address;
+    @Getter
+    @Setter
+    @Column(columnDefinition = "TEXT")
+    private String contractJson;
 
     @Getter
     @Setter
@@ -60,13 +66,6 @@ public class Task {
     @Setter
     private LocalDate timeTo;
 
-    @Getter
-    @Setter
-    private float rate;
-
-    @Getter
-    @Setter
-    private LocalTime timeTillBargain;
 
     @Getter
     @Setter
@@ -76,7 +75,8 @@ public class Task {
     @Setter
     private int successes;
 
-    public Task(String name, int count, String ip, int port, String description, float price, String flag, LocalDate timeFrom, LocalDate timeTo) {
+
+    public Task(String name, String ip, int port, String description, float price, String flag, LocalDate from, LocalDate to, String address, String contractJson) {
         this.name = name;
         this.count = count;
         this.ip = ip;
@@ -84,11 +84,9 @@ public class Task {
         this.description = description;
         this.price = price;
         this.flag = flag;
-        this.timeFrom = timeFrom;
-        this.timeTo = timeTo;
-        this.tries = 0;
-        this.successes = 0;
-        this.rate = 0;
-        this.timeTillBargain = LocalTime.of(0, 0);
+        this.timeFrom = from;
+        this.timeTo = to;
+        this.address = address;
+        this.contractJson = contractJson;
     }
 }

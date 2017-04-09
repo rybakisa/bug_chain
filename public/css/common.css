@@ -3,3 +3,18 @@ img {
     width: auto;
 }
 
+@font-face {
+    /*font-family: 'Bebas Neue';*/
+
+}
+
+h1, h2 {
+    font-family: 'Bebas Neue';
+    font-weight: bold;
+}
+
+lapel, p {
+    font-family: 'Century Gothic';
+}
+
+

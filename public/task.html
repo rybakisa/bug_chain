@@ -44,15 +44,19 @@
         <div class="col-lg-12">
             <h2>Описание</h2>
             <p id="taskDescription"></p>
-            <h2>Вознаграждение(ETH) </h2>
+            <h2>Вознаграждение (ETH) </h2>
             <p id="taskPrice"></p>
             <h2>Закрытие контракта</h2>
             <p id="taskEndAt"></p>
-            <label for="taskFlag" class=" control-label">Ввести "флаг"</label>
+            <h2>Адрес контракта</h2>
+            <p id="taskAddress"></p>
+            <h2>Contract JSON Interface</h2>
+            <p id="cji"></p>
+            <b><label for="taskFlag" class=" control-label">Ввести "флаг"</label></b>
             <input type="text" class="form-control " id="taskFlag" required>
             <br>
             <div class="form-group">
-                <label for="taskExploit">Загрузить эксплоит</label>
+                <b><label for="taskExploit">Загрузить эксплоит</label></b>
                 <input type="file" id="taskExploit">
             </div>
             <button id='acceptTaskButton' class="btn btn-success btn-lg">Отправить</button>
@@ -66,6 +70,9 @@
 <script>
     let task = getCookie('task');
 
+    var address;
+    var interface;
+
     $.ajax({
         url: '/api/task/find?id=' + task,
         type: 'GET',
@@ -75,6 +82,10 @@
                 document.getElementById('taskDescription').innerHTML = result.description;
                 document.getElementById('taskPrice').innerHTML = result.price;
                 document.getElementById('taskEndAt').innerHTML = result.timeTo.dayOfMonth + '.' + result.timeTo.monthValue + '.' + result.timeTo.year;
+                document.getElementById('taskAddress').innerHTML = result.address;
+                address = result.address;
+                document.getElementById('cji').innerHTML = result.contractJson;
+                interface = result.contractJson;
             }
         }
     });
@@ -95,20 +106,47 @@
     }
 
 
-    document.getElementById('acceptTaskButton').onclick = function () {
-
+    $('#acceptTaskButton').on('click', function () {
         var file = document.getElementById('taskExploit').files[0];
         if (file) {
             var reader = new FileReader();
             reader.readAsText(file, "UTF-8");
             reader.onload = function (evt) {
-                console.log(evt.target.result);
-            }
-            reader.onerror = function (evt) {
-                console.log("error reading file");
+                let dataEntity = {
+                    'file': evt.target.result,
+                    'flag': $('#taskFlag').val(),
+                    'filename': file.name,
+                    'interface': interface,
+                    'address': address,
+                };
+
+//                console.log(dataEntity);
+
+                let params = $.param(dataEntity);
+
+
+                $.ajax({
+                    url: 'http://192.168.10.35:5001/upload?' + params,
+                    type: 'POST',
+//                    datatype: 'json',
+//                    data: dataEntity,
+                    statusCode: {
+                        success: function (result) {
+//                            alert("Вы нашли необходимый флаг!");
+                            console.log("HOOOOOOORAY")
+//                        },
+//                        error: function (result) {
+//                            alert("К сожалению, ваш флаг ошибочен");
+//                        }
+                        }
+                    }
+                });
+                reader.onerror = function (evt) {
+                    console.log("error reading file");
+                }
             }
         }
-    }
+    });
 
 
 </script>
