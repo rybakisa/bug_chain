@@ -1,10 +1,10 @@
 pragma solidity ^0.4.8;
 
 
-//Contract with only one (first) submission with file cheking
+// Contract with only one (first) submission with file cheking
 contract SolveFileFlagProblem {
     
-    //global contract storage
+    // global contract storage
     address public owner;           // deployer of the contract
     address public admin;           // wallet from exploit testing server
     uint public divisor;            // to divide fund on flag & file parts
@@ -14,8 +14,8 @@ contract SolveFileFlagProblem {
     bool flag_test_passed;          // corret flag finded
     bytes32 flag;                   // secret string
     
-    //constructor:
-    //executes only, when contract deployed
+    // constructor:
+    // executes only, when contract deployed
     // store owner and flag
     //function SolveFileFlagProblem(string _flag, uint _divisor, uint _divident)
     function SolveFileFlagProblem(string _flag)
@@ -24,8 +24,8 @@ contract SolveFileFlagProblem {
         flag = sha3(_flag);
         //divisor = _divisor;
         //divident = _divident;
-        divisor = 2;
-        divident = 3;
+        divident = 2;
+        divisor = 3;
         file_test_passed = false;
         flag_test_passed = false;
         admin = 0x02b3674D222dDee4AeE5c457F67905B9fC51d082;
@@ -43,8 +43,7 @@ contract SolveFileFlagProblem {
         }
     }
     
-    //compare strings
-    //TODO: change string logic to hashes logic
+    // verify hash
     function isFlagCorrect(string _flag) constant returns (bool)
     {
         return sha3(_flag) == flag ? true : false;
@@ -61,7 +60,7 @@ contract SolveFileFlagProblem {
         {
             flag_test_passed = true;
 
-            if(!hacker.send(this.balance*(divident/divisor)))
+            if(!hacker.send((this.balance*divident)/divisor))
             {
                 throw;    
             }
@@ -86,7 +85,7 @@ contract SolveFileFlagProblem {
             
             if (flag_test_passed)
             {
-                if(!hacker.send(this.balance - this.balance*(divident/divisor)))
+                if(!hacker.send(this.balance - (this.balance*divident)/divisor))
                 {
                     throw;    
                 }
