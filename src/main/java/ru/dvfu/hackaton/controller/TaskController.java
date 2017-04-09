@@ -12,6 +12,7 @@ import ru.dvfu.hackaton.service.TaskService;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by anton on 08.04.17.
@@ -25,11 +26,15 @@ public class TaskController {
     @Resource
     ClientService clientService;
 
-//    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-//    public Set<Task> getTasksByEmail(@RequestParam("email") String email) {
-//        Client client = clientService.getClientByEmail(email);
-//        return client.getTasks();
-//    }
+    @RequestMapping(value = "/task/find", method = RequestMethod.GET)
+    public Task getTaskById(@RequestParam("id") int id) {
+        return taskService.getTaskById(id);
+    }
+
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
+    }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.POST)
     public void addTask(@RequestParam("email") String email,

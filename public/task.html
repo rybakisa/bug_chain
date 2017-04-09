@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bugchain</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/task.css">
+    <link rel="stylesheet" href="css/common.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <link type="text/css" rel="stylesheet" href="bower_components/jsgrid/dist/jsgrid.min.css"/>
+    <link type="text/css" rel="stylesheet" href="bower_components/jsgrid/dist/jsgrid-theme.min.css"/>
+
+    <script type="text/javascript" src="bower_components/jsgrid/dist/jsgrid.min.js"></script>
+    <script type="text/javascript" src="javascript/common.js"></script>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" id="bar">
+            <a class="navbar-brand" href="index.html">
+                <img alt="Bugchain" src="resources/0_Logo.png">
+            </a>
+
+
+        </div>
+    </div>
+</nav>
+
+<div class="container col-lg-10">
+    <h1>Задание <span id="taskName"></span></h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Описание</h2>
+            <p id="taskDescription"></p>
+            <h2>Вознаграждение(ETH) </h2>
+            <p id="taskPrice"></p>
+            <h2>Закрытие контракта</h2>
+            <p id="taskEndAt"></p>
+            <label for="taskFlag" class=" control-label">Ввести "флаг"</label>
+            <input type="text" class="form-control " id="taskFlag" required>
+            <br>
+            <div class="form-group">
+                <label for="taskExploit">Загрузить эксплоит</label>
+                <input type="file" id="taskExploit">
+            </div>
+            <button id='acceptTaskButton' class="btn btn-success btn-lg">Отправить</button>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    let task = getCookie('task');
+
+    $.ajax({
+        url: '/api/task/find?id=' + task,
+        type: 'GET',
+        statusCode: {
+            200: function (result) {
+                document.getElementById('taskName').innerHTML = result.name;
+                document.getElementById('taskDescription').innerHTML = result.description;
+                document.getElementById('taskPrice').innerHTML = result.price;
+                document.getElementById('taskEndAt').innerHTML = result.timeTo.dayOfMonth + '.' + result.timeTo.monthValue + '.' + result.timeTo.year;
+            }
+        }
+    });
+
+    function readTextFile(file) {
+        console.log(file);
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4) {
+                if (rawFile.status === 200 || rawFile.status == 0) {
+                    var allText = rawFile.responseText;
+                    alert(allText);
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+
+    document.getElementById('acceptTaskButton').onclick = function () {
+
+        var file = document.getElementById('taskExploit').files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = function (evt) {
+                console.log(evt.target.result);
+            }
+            reader.onerror = function (evt) {
+                console.log("error reading file");
+            }
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

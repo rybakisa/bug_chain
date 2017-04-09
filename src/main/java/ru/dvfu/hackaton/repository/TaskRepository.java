@@ -9,4 +9,5 @@ import ru.dvfu.hackaton.model.Task;
  */
 @Repository
 public interface TaskRepository extends CrudRepository<Task, String> {
+    Task findTaskById(int id);
 }

@@ -31,6 +31,9 @@ public class Client {
     private String name;
     @Getter
     @Setter
+    private String purse;
+    @Getter
+    @Setter
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Task> tasks;
 
@@ -47,12 +50,12 @@ public class Client {
         this.tasks = new HashSet<Task>();
     }
 
-    public Client(String email, String password, String description, String name) {
+    public Client(String email, String password, String description, String name, String purse) {
         this.email = email;
         this.password = password;
         this.description = description;
         this.name = name;
+        this.purse = purse;
         this.tasks = new HashSet<Task>();
-
     }
 }

@@ -1,0 +1,10 @@
+h1 {
+    text-align: left;
+    color: #3cd463;
+}
+
+.container {
+    top: 7%;
+    left: 10%;
+    position: absolute;
+}

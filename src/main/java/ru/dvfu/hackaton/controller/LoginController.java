@@ -37,8 +37,12 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
-    public ResponseEntity<Object> signup(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("name") String name, @RequestParam("description") String description) {
-        if (clientService.signup(email, password, description, name)) {
+    public ResponseEntity<Object> signup(@RequestParam("email") String email,
+                                         @RequestParam("password") String password,
+                                         @RequestParam("name") String name,
+                                         @RequestParam("purse") String purse,
+                                         @RequestParam("description") String description) {
+        if (clientService.signup(email, password, description, name, purse)) {
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);

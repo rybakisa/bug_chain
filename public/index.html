@@ -46,10 +46,15 @@
 </div>
 <script>
     setLogOut($('#bar'));
-    setProfile($('#bar'));
+    //    setProfile($('#bar'));
 
     $('.left').on('click', function () {
-        window.location.href = ("auth.html");
+        if (getCookie('email') !== '') {
+            window.location.href = ("profile.html");
+        }
+        else {
+            window.location.href = ("auth.html");
+        }
     });
 
     $('.right').on('click', function () {

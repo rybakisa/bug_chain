@@ -8,7 +8,7 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/hacker.css">
     <link rel="stylesheet" href="css/common.css">
 
 
@@ -39,72 +39,45 @@
 </nav>
 
 <div class="container col-lg-10">
-    <h1>Личный кабинет</h1>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="row">
-                <label for="clientName" class="col-sm-5 control-label">Название/Имя</label>
-                <div class="col-sm-7">
-                    <p id="clientName"></p>
-                </div>
-            </div>
-            <div class="row">
-                <label for="inputEmail" class="col-sm-5 control-label">Адрес электронной почты</label>
-                <div class="col-sm-7">
-                    <p id="inputEmail"></p>
-                </div>
-            </div>
-            <div class="row">
-                <label for="clientDescription" class="col-sm-5 control-label">Описание</label>
-                <div class="col-sm-7">
-                    <p id="clientDescription" rows="3"></p>
-                </div>
-            </div>
-            <button id='addTaskButton' class="btn btn-success btn-lg">Добавить задание</button>
 
-        </div>
-    </div>
-    <h2>Опубликованные задания</h2>
+    <h1>Список заданий</h1>
     <div id="jsGrid" class="col-lg-12"></div>
 
 </div>
 
 
 <script>
+
+    setCookie('task', '');
+
     var tasks = [];
 
-    setLogOut($('#bar'));
-
-    let email = getCookie('email');
-
     $.ajax({
-        url: '/api/find?email=' + email,
+        url: '/api/tasks',
         type: 'GET',
         statusCode: {
             200: function (result) {
-                document.getElementById('clientName').innerHTML = result.name;
-                document.getElementById('inputEmail').innerHTML = result.email;
-                document.getElementById('clientDescription').innerHTML = result.description;
-                tasks = result.tasks;
+                tasks = result;
                 if ((tasks) && (tasks.length > 0)) {
                     for (let task of tasks) {
                         let to = new Date(task.timeTo.year, task.timeTo.monthValue - 1, task.timeTo.dayOfMonth);
                         let from = new Date(task.timeFrom.year, task.timeFrom.monthValue - 1, task.timeFrom.dayOfMonth);
                         let timeDiff = Math.abs(to.getTime() - from.getTime());
-                        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                        task.timeRest = diffDays;
-                        console.log(task.timeRest);
+                        task.timeRest = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     }
                 }
             }
         }
     });
 
-    document.getElementById('addTaskButton').onclick = function () {
-        window.location.href = ("client_add_new_task.html");
-    };
-
-
+    function acceptTask(item) {
+        return $("<button>")
+            .text("Принять")
+            .click(function (e) {
+                setCookie('task', item.id);
+                window.location.href = 'task.html';
+            });
+    }
     $(function () {
 
         $("#jsGrid").jsGrid({
@@ -113,6 +86,9 @@
 
             sorting: true,
             editing: false,
+            autoload: false,
+            paging: false,
+
 
             data: tasks,
 
@@ -120,12 +96,21 @@
                 {name: "name", title: "Название", type: "text", width: 100},
                 {name: "count", title: "Максимальное количество победителей", type: "number", width: 100},
                 {name: "price", title: "Сумма контракта(ETH)", type: "number", width: 100},
-//                {name: "TimeTo", title: "Осталось до завершения задания", type: "text", width: 150},
-//                {name: "maxRate", title: "Максимальная ставка", type: "number", width: 100},
-                {name: "timeRest", title: "Осталось дней до завершения торгов", type: "text", width: 150},
-                {name: "successes", title: "Успешно", type: "number", width: 100},
-                {name: "tries", title: "Попыток", type: "number", width: 100}
-            ]
+                {name: "timeRest", title: "Осталось дней до завершения задания", type: "text", width: 150},
+                {
+                    type: "control",
+                    deleteButton: false,
+                    editButton: false,
+                    itemTemplate: function (value, item) {
+                        var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                        var $customButton = acceptTask(item);
+
+                        return $result.add($customButton);
+                    }
+
+                }
+            ],
+
         });
 
     });

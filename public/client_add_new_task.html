@@ -17,6 +17,7 @@
 
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="javascript/common.js"></script>
+    <script src="bower_components/web3/dist/web3.js"></script>
 
 
 </head>
@@ -75,7 +76,7 @@
         <div class="form-group ">
             <label for="taskPrice" class="col-sm-3 control-label">Оплата</label>
             <div class="col-sm-6">
-                <input type="number" class="form-control" id="taskPrice" placeholder="ETH">
+                <input type="number" class="form-control" id="taskPrice" placeholder="ETH" required>
             </div>
         </div>
 
@@ -109,37 +110,61 @@
     setLogOut($('#bar'));
     setProfile($('#bar'));
 
-    $('#addTaskButton').on('click', function () {
-        let dataToServer = {};
-        dataToServer.name = $('#taskName').val();
-        dataToServer.count = $('#taskCount').val();
-        dataToServer.ip = $('#taskIp').val();
-        dataToServer.port = $('#taskPort').val();
-        dataToServer.description = $('#taskDescription').val();
-        dataToServer.price = $('#taskPrice').val();
-        dataToServer.flag = $('#taskFlag').val();
-        let from = new Date($('#taskFromDate').val());
-        dataToServer.yearFrom = from.getFullYear();
-        dataToServer.monthFrom = from.getMonth() + 1;
-        dataToServer.dayFrom = from.getDate();
-        let to = new Date($('#taskToDate').val());
-        dataToServer.yearTo = to.getFullYear();
-        dataToServer.monthTo = to.getMonth() + 1;
-        dataToServer.dayTo = to.getDate();
+    var Web3 = require('web3');
+    var web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.10.37:8102"));
+    console.log(web3.isConnected());
 
-        dataToServer.email = getCookie('email');
+
+    $('#addTaskButton').on('click', function () {
         $.ajax({
-            url: '/api/tasks',
-            dataType: 'json',
-            data: dataToServer,
-            type: 'POST',
+            url: '/api/find?email=' + getCookie('email'),
+            type: 'GET',
             statusCode: {
                 200: function (result) {
-                    window.location.href = ("profile.html");
+                    let purse = result.purse;
+                    let balance = web3.eth.getBalance(purse);
+                    if ($('#taskPrice').val() > balance) {
+                        alert("На вашем кошельке недостаточно средств для проведения операции");
+                    } else {
+                        let dataToServer = {};
+                        dataToServer.name = $('#taskName').val();
+                        dataToServer.count = $('#taskCount').val();
+                        dataToServer.ip = $('#taskIp').val();
+                        dataToServer.port = $('#taskPort').val();
+                        dataToServer.description = $('#taskDescription').val();
+                        dataToServer.price = $('#taskPrice').val();
+                        dataToServer.flag = $('#taskFlag').val();
+
+                        let from = new Date($('#taskFromDate').val());
+                        dataToServer.yearFrom = from.getFullYear();
+                        dataToServer.monthFrom = from.getMonth() + 1;
+                        dataToServer.dayFrom = from.getDate();
+                        let to = new Date($('#taskToDate').val());
+                        dataToServer.yearTo = to.getFullYear();
+                        dataToServer.monthTo = to.getMonth() + 1;
+                        dataToServer.dayTo = to.getDate();
+
+                        dataToServer.email = getCookie('email');
+                        $.ajax({
+                            url: '/api/tasks',
+                            dataType: 'json',
+                            data: dataToServer,
+                            type: 'POST',
+                            statusCode: {
+                                200: function (result) {
+                                    window.location.href = ("profile.html");
+                                }
+                            }
+                        });
+                    }
+
+
                 }
             }
+
         });
     });
+
 
 </script>
 

@@ -24,9 +24,9 @@ public class ClientService {
         }
     }
 
-    public boolean signup(String email, String password, String description, String name) {
+    public boolean signup(String email, String password, String description, String name, String purse) {
         if ((clientRepository.findClientByEmail(email) == null) && (clientRepository.findClientByName(name) == null)) {
-            Client client = new Client(email, password, description, name);
+            Client client = new Client(email, password, description, name, purse);
             clientRepository.save(client);
             return true;
         } else {

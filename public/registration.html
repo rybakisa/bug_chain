@@ -55,6 +55,13 @@
             </div>
         </div>
 
+        <div class="form-group col-lg-12">
+            <label for="clientPurse" class="col-sm-3 control-label">Номер криптокошелька</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control " id="clientPurse" required>
+            </div>
+        </div>
+
         <div class="form-group ">
             <label for="clientPass" class="col-sm-3 control-label">Пароль</label>
             <div class="col-sm-9">
@@ -78,6 +85,8 @@
         client.description = $('#clientDescription').val();
         client.email = $('#clientEmail').val();
         client.password = $('#clientPass').val();
+        client.purse = $('#clientPurse').val();
+        console.log(client);
         $.ajax({
             url: '/api/clients',
             dataType: 'json',
